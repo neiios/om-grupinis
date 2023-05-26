@@ -1,25 +1,24 @@
 import math
 import matplotlib.pyplot as plt
 import numpy as np
+from inspect import signature
+from random import uniform
 
 
 # https://www.sfu.ca/~ssurjano/grlee12.html
-def gramacy_lee(X: list) -> float:
-    return math.sin(10 * math.pi * X[0]) / 2 * X[0] + (X[0] - 1) ** 4
+def gramacy_lee(x: float) -> float:
+    return (math.sin(10 * math.pi * x) / (2 * x)) + ((x - 1) ** 4)
 
 
 def plot_gramacy_lee() -> None:
-    x = np.linspace(0, math.pi, 1000)
-    y = np.array([gramacy_lee([val]) for val in x])
+    x = np.linspace(0.5, 2.5, 1000)
+    y = np.array([gramacy_lee(val) for val in x])
     plt.plot(x, y)
     plt.show()
 
 
 # https://www.sfu.ca/~ssurjano/camel6.html
-def six_hump_camel(X: list) -> float:
-    x1 = X[0]
-    x2 = X[1]
-
+def six_hump_camel(x1: float, x2: float) -> float:
     part_one = (4 - 2.1 * x1**2 + (x1**4 / 3)) * x1**2
     part_two = x1 * x2
     part_three = (-4 + 4 * x2**2) * x2**2
