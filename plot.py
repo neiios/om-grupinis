@@ -14,15 +14,6 @@ def six_hump_camel(x1: float, x2: float) -> float:
     return part_one + part_two + part_three
 
 
-def configurePlot(ax):
-    ax.spines["right"].set_visible(False)
-    ax.spines["top"].set_visible(False)
-    ax.spines["bottom"].set_position(("data", -1))
-    ax.spines["left"].set_position(("data", 0.5))
-    ax.tick_params(axis="both", which="both", length=0)
-    ax.xaxis.get_major_ticks()[0].label1.set_visible(False)
-
-
 def drawGramacyLee(points):
     points = [point[0] for point in points]
     fig, ax = plt.subplots()
@@ -51,7 +42,12 @@ def drawGramacyLee(points):
         )
         ax.scatter(x[:-1], y[:-1], zorder=2)
 
-    configurePlot(ax)
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["bottom"].set_position(("data", -1))
+    ax.spines["left"].set_position(("data", 0.5))
+    ax.tick_params(axis="both", which="both", length=0)
+    ax.xaxis.get_major_ticks()[0].label1.set_visible(False)
 
     x = np.linspace(-1, 2.5, 10000)
     y = gramacy_lee(x)
@@ -75,7 +71,6 @@ def drawSixHumpCamel(points):
     six_hump_camel_vec = np.vectorize(six_hump_camel)
     Z = six_hump_camel_vec(X1, X2)
 
-    # Create a 3D plot
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection="3d", computed_zorder=False)
     ax.plot_surface(X1, X2, Z, cmap="hsv", alpha=0.9, zorder=1)
@@ -116,12 +111,10 @@ def drawSixHumpCamel(points):
             bbox=bbox_props,
         )
 
-    # Set the axis labels and title
     ax.set_xlabel("x1")
     ax.set_ylabel("x2")
     ax.set_zlabel("f(x1, x2)")
 
-    # Show the plot
     plt.show()
 
 
@@ -149,15 +142,8 @@ def plot2d(points, approaching_points=[9, 49, 99]):
             textcoords="offset points",
         )
 
-    # ax.set_xlim([0.2, 0.6])  # set x-axis limits
-    # ax.set_ylim([0.2, 0.5])  # set y-axis limits
-
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
-    # ax.spines['bottom'].set_position('zero')
-    # ax.spines['left'].set_position('zero')
     ax.tick_params(axis="both", which="both", length=0)
-
     ax.xaxis.get_major_ticks()[0].label1.set_visible(False)
-    # plt.title(plotTitle, y=1.04)
     plt.show()
