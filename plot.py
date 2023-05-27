@@ -14,7 +14,7 @@ def six_hump_camel(x1: float, x2: float) -> float:
     return part_one + part_two + part_three
 
 
-def drawGramacyLee(points):
+def draw_gramacy_lee(points):
     points = [point[0] for point in points]
     fig, ax = plt.subplots()
 
@@ -57,7 +57,7 @@ def drawGramacyLee(points):
     plt.show()
 
 
-def drawSixHumpCamel(points):
+def draw_six_hump_camel(points):
     points = np.array(points)
 
     indices = [0, 49, 199, len(points) - 1]

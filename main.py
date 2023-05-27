@@ -1,8 +1,7 @@
 import math
-import matplotlib.pyplot as plt
-import numpy as np
 from inspect import signature
 from random import uniform
+
 from plot import *
 
 
@@ -20,9 +19,9 @@ def plot_gramacy_lee() -> None:
 
 # https://www.sfu.ca/~ssurjano/camel6.html
 def six_hump_camel(x1: float, x2: float) -> float:
-    part_one = (4 - 2.1 * x1**2 + (x1**4 / 3)) * x1**2
+    part_one = (4 - 2.1 * x1 ** 2 + (x1 ** 4 / 3)) * x1 ** 2
     part_two = x1 * x2
-    part_three = (-4 + 4 * x2**2) * x2**2
+    part_three = (-4 + 4 * x2 ** 2) * x2 ** 2
     return part_one + part_two + part_three
 
 
@@ -94,7 +93,7 @@ def generate_new_point(X: list[float], bounds: [list[list]]) -> list[float]:
 
 # The probability of convergence is not 1. Sometimes it won't find the global minimum.
 def simulated_annealing(
-    f, bounds: list[list], temp_max: float, verbose: bool = True
+        f, bounds: list[list], temp_max: float, verbose: bool = True
 ) -> list[list[float]]:
     var_count = len(signature(f).parameters)
     if var_count != len(bounds):
@@ -178,14 +177,15 @@ def plot_six_hump_camel() -> None:
 
 
 def main():
-    GramacyLeePoints = simulated_annealing(
+    gramacy_lee_points = simulated_annealing(
         f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]]
     )
-    SixHumpCamelPoints = simulated_annealing(
+    six_hump_camel_points = simulated_annealing(
         f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]]
     )
-    drawGramacyLee(GramacyLeePoints)
-    drawSixHumpCamel(SixHumpCamelPoints)
+
+    draw_gramacy_lee(gramacy_lee_points)
+    draw_six_hump_camel(six_hump_camel_points)
 
 
 if __name__ == "__main__":
