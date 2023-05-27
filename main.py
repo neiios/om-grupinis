@@ -10,19 +10,21 @@ def gramacy_lee(x: float) -> float:
     return (math.sin(10 * math.pi * x) / (2 * x)) + ((x - 1) ** 4)
 
 
-def plot_gramacy_lee(FinalX: float, FinalY:float) -> None:
+def plot_gramacy_lee(FinalX: float, FinalY: float) -> None:
     x = np.linspace(0.5, 2.5, 1000)
     y = np.array([gramacy_lee(val) for val in x])
     plt.plot(x, y)
-    plt.scatter(FinalX, FinalY, color='r', label='Global Minimum')
+    plt.scatter(FinalX, FinalY, color="r", label="Global Minimum")
     plt.show()
 
 
 def plot_temperature_iterations(temperature: list = [], iterations: list = []) -> None:
     plt.plot(iterations, temperature)
-    plt.xlabel('Iterations')
-    plt.ylabel('Temperature')
+    plt.xlabel("Iterations")
+    plt.ylabel("Temperature")
     plt.show()
+
+
 # https://www.sfu.ca/~ssurjano/camel6.html
 def six_hump_camel(x1: float, x2: float) -> float:
     part_one = (4 - 2.1 * x1**2 + (x1**4 / 3)) * x1**2
@@ -43,7 +45,7 @@ def plot_six_hump_camel(X1final, X2final, Yfinal) -> None:
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection="3d")
     ax.plot_surface(X1, X2, Z, cmap="viridis")
-    ax.scatter(X1final, X2final, Yfinal, color='r', label='Global minimum')
+    ax.scatter(X1final, X2final, Yfinal, color="r", label="Global minimum")
 
     ax.set_xlabel("X1")
     ax.set_ylabel("X2")
@@ -122,13 +124,13 @@ def simulated_annealing(
 def main():
     X = simulated_annealing(f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]])
     print("pirmas")
-    final=gramacy_lee(X[0])
+    final = gramacy_lee(X[0])
     plot_gramacy_lee(X, final)
     print("cia yra final")
     print(final)
 
     X = simulated_annealing(f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]])
-    final2=six_hump_camel(X[0], X[1])
+    final2 = six_hump_camel(X[0], X[1])
     plot_six_hump_camel(X[0], X[1], final2)
     print(final2)
     print(X)
