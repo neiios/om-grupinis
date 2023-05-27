@@ -101,21 +101,27 @@ def simulated_annealing(
 
     i = 0
     while temp > 0.0000000001:  # Why this many zeros? Don't ask questions.
-        iterations.append(i)
         i = i + 1
 
         X_new = generate_new_point(X, bounds)  # TODO: How to choose this?
         E_new = f(*X_new)
 
-        if np.linalg.norm(np.array(X_new) - np.array(X)) < 0.0001:
+        if (
+            np.linalg.norm(np.array(X_new) - np.array(X)) < 0.0001
+        ):  # TODO: do we need that?
             break
 
         if acceptance_criterion(E_new, E, temp):
             X = X_new
             E = E_new
+
         temperatures.append(temp)
+        iterations.append(i)
+
         temp = temp * 0.95  # TODO: How to choose this? I think there is a better way.
+
     plot_temperature_iterations(temperatures, iterations)
+
     if verbose:
         print(f(*X))
     return X
