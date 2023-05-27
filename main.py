@@ -36,15 +36,24 @@ def plot_six_hump_camel() -> None:
 
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection="3d")
-    ax.plot_surface(X1, X2, Z, cmap="viridis")
+    ax.plot_surface(X1, X2, Z, cmap="viridis", alpha = 0.7)
+
+    # Find the global minimum using optimization techniques
+    from scipy.optimize import minimize
+    result = minimize(lambda x: six_hump_camel(x[0], x[1]), [0, 0])
+    x_min, y_min = result.x
+    z_min = result.fun
+
+    # Plot the global minimum point
+    ax.scatter(x_min, y_min, z_min, color='r', marker='o', s=50, label='Global Minimum', zorder=10, alpha = 1.0)
 
     ax.set_xlabel("X1")
     ax.set_ylabel("X2")
     ax.set_zlabel("Z")
     ax.set_title("3D Plot of the Six-Hump Camel Function")
 
+    plt.legend()
     plt.show()
-
 
 def acceptance_criterion(cur_fval: float, prev_fval: float, temperature: float) -> bool:
     delta_fval = cur_fval - prev_fval
