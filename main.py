@@ -5,6 +5,7 @@ from inspect import signature
 from random import uniform
 from plot import *
 
+
 # https://www.sfu.ca/~ssurjano/grlee12.htmld
 def gramacy_lee(x: float) -> float:
     return (math.sin(10 * math.pi * x) / (2 * x)) + ((x - 1) ** 4)
@@ -36,16 +37,27 @@ def plot_six_hump_camel() -> None:
 
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection="3d")
-    ax.plot_surface(X1, X2, Z, cmap="viridis", alpha = 0.7)
+    ax.plot_surface(X1, X2, Z, cmap="viridis", alpha=0.7)
 
     # Find the global minimum using optimization techniques
     from scipy.optimize import minimize
+
     result = minimize(lambda x: six_hump_camel(x[0], x[1]), [0, 0])
     x_min, y_min = result.x
     z_min = result.fun
 
     # Plot the global minimum point
-    ax.scatter(x_min, y_min, z_min, color='r', marker='o', s=50, label='Global Minimum', zorder=10, alpha = 1.0)
+    ax.scatter(
+        x_min,
+        y_min,
+        z_min,
+        color="r",
+        marker="o",
+        s=50,
+        label="Global Minimum",
+        zorder=10,
+        alpha=1.0,
+    )
 
     ax.set_xlabel("X1")
     ax.set_ylabel("X2")
@@ -54,6 +66,7 @@ def plot_six_hump_camel() -> None:
 
     plt.legend()
     plt.show()
+
 
 def acceptance_criterion(cur_fval: float, prev_fval: float, temperature: float) -> bool:
     delta_fval = cur_fval - prev_fval
@@ -132,17 +145,28 @@ def plot_six_hump_camel() -> None:
     Z = six_hump_camel_vec(X1, X2)
 
     fig = plt.figure(figsize=(8, 6))
-    ax = fig.add_subplot(1,1,1, projection="3d")
-    ax.plot_surface(X1, X2, Z, cmap="viridis", alpha = 0.7, zorder=1)
+    ax = fig.add_subplot(1, 1, 1, projection="3d")
+    ax.plot_surface(X1, X2, Z, cmap="viridis", alpha=0.7, zorder=1)
 
     # Find the global minimum using optimization techniques
     from scipy.optimize import minimize
+
     result = minimize(lambda x: six_hump_camel(x[0], x[1]), [0, 0])
     x_min, y_min = result.x
     z_min = result.fun
 
     # Plot the global minimum point
-    ax.scatter(x_min, y_min, z_min, color='r', marker='o', s=50, label='Global Minimum', zorder=10, alpha = 1.0)
+    ax.scatter(
+        x_min,
+        y_min,
+        z_min,
+        color="r",
+        marker="o",
+        s=50,
+        label="Global Minimum",
+        zorder=10,
+        alpha=1.0,
+    )
 
     ax.set_xlabel("X1")
     ax.set_ylabel("X2")
@@ -152,10 +176,17 @@ def plot_six_hump_camel() -> None:
     plt.legend()
     plt.show()
 
+
 def main():
-    GramacyLeePoints = simulated_annealing(f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]])
-    SixHumpCamelPoints = simulated_annealing(f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]])
+    GramacyLeePoints = simulated_annealing(
+        f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]]
+    )
+    SixHumpCamelPoints = simulated_annealing(
+        f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]]
+    )
     drawGramacyLee(GramacyLeePoints)
     drawSixHumpCamel(SixHumpCamelPoints)
+
+
 if __name__ == "__main__":
     main()
