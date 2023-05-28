@@ -4,7 +4,7 @@ from random import uniform
 
 import numpy as np
 
-from plot import draw_gramacy_lee, draw_six_hump_camel, plot_temperature_iterations
+from output import output_data
 
 
 # https://www.sfu.ca/~ssurjano/grlee12.html
@@ -94,22 +94,7 @@ def simulated_annealing(
 
 
 def main():
-    gramacy_lee_points = simulated_annealing(
-        f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]]
-    )
-
-    six_hump_camel_points = simulated_annealing(
-        f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]]
-    )
-
-    print("Gramacy & Lee (2012): ", gramacy_lee_points)
-    print("Six Hump Camel:", six_hump_camel_points)
-
-    draw_gramacy_lee(gramacy_lee_points["points"])
-    draw_six_hump_camel(six_hump_camel_points["points"])
-
-    plot_temperature_iterations(gramacy_lee_points["temperatures"])
-    plot_temperature_iterations(six_hump_camel_points["temperatures"])
+    output_data(simulated_annealing, gramacy_lee, six_hump_camel)
 
 
 if __name__ == "__main__":
