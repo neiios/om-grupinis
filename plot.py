@@ -1,18 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 # Gramacy Lee version with numpy functions
 def gramacy_lee(x: float) -> float:
     return (np.sin(10 * np.pi * x) / (2 * x)) + ((x - 1) ** 4)
-
 
 def six_hump_camel(x1: float, x2: float) -> float:
     part_one = (4 - 2.1 * x1 ** 2 + (x1 ** 4 / 3)) * x1 ** 2
     part_two = x1 * x2
     part_three = (-4 + 4 * x2 ** 2) * x2 ** 2
     return part_one + part_two + part_three
-
 
 def draw_gramacy_lee(points):
     points = [point[0] for point in points]
@@ -117,33 +114,61 @@ def draw_six_hump_camel(points):
 
     plt.show()
 
+def plot_temperature_iterations(temperature: list = []) -> None:
+    iterations = list(range(len(temperature)))
+    plt.plot(iterations, temperature)
+    plt.xlabel("Iterations")
+    plt.ylabel("Temperature")
+    plt.show()
 
 # aint used
-def plot2d(points, approaching_points=[9, 49, 99]):
-    points = np.array(points)
-    fig, ax = plt.subplots()
-    approaching_points.append(len(points) - 1)
-    x = np.arange(0, 2, 0.01)
-    y = np.arange(-1, 2, 0.01)
-    X, Y = np.meshgrid(x, y)
-    Z = -0.125 * X * Y * (1 - X - Y)
-    CS = ax.contour(X, Y, Z, 15, linewidths=0.3)
-    ax.clabel(CS, inline=True, fontsize=9)
+# def plot2d(points, approaching_points=[9, 49, 99]):
+#     points = np.array(points)
+#     fig, ax = plt.subplots()
+#     approaching_points.append(len(points) - 1)
+#     x = np.arange(0, 2, 0.01)
+#     y = np.arange(-1, 2, 0.01)
+#     X, Y = np.meshgrid(x, y)
+#     Z = -0.125 * X * Y * (1 - X - Y)
+#     CS = ax.contour(X, Y, Z, 15, linewidths=0.3)
+#     ax.clabel(CS, inline=True, fontsize=9)
+#
+#     x_points = [points[i][0] for i in approaching_points]
+#     y_points = [points[i][1] for i in approaching_points]
+#     ax.plot(x_points, y_points, "bo")
+#
+#     for i in approaching_points:
+#         ax.annotate(
+#             str(i + 1),
+#             xy=(points[i][0], points[i][1]),
+#             xytext=(7, 0),
+#             textcoords="offset points",
+#         )
+#
+#     ax.spines["right"].set_visible(False)
+#     ax.spines["top"].set_visible(False)
+#     ax.tick_params(axis="both", which="both", length=0)
+#     ax.xaxis.get_major_ticks()[0].label1.set_visible(False)
+#     plt.show()
 
-    x_points = [points[i][0] for i in approaching_points]
-    y_points = [points[i][1] for i in approaching_points]
-    ax.plot(x_points, y_points, "bo")
-
-    for i in approaching_points:
-        ax.annotate(
-            str(i + 1),
-            xy=(points[i][0], points[i][1]),
-            xytext=(7, 0),
-            textcoords="offset points",
-        )
-
-    ax.spines["right"].set_visible(False)
-    ax.spines["top"].set_visible(False)
-    ax.tick_params(axis="both", which="both", length=0)
-    ax.xaxis.get_major_ticks()[0].label1.set_visible(False)
-    plt.show()
+#
+# def plot_six_hump_camel(X1final, X2final, Yfinal) -> None:
+#     x1 = np.linspace(-2, 2, 100)
+#     x2 = np.linspace(-1, 1, 100)
+#
+#     X1, X2 = np.meshgrid(x1, x2)
+#
+#     six_hump_camel_vec = np.vectorize(six_hump_camel)
+#     Z = six_hump_camel_vec(X1, X2)
+#
+#     fig = plt.figure(figsize=(8, 6))
+#     ax = fig.add_subplot(111, projection="3d")
+#     ax.plot_surface(X1, X2, Z, cmap="viridis")
+#     ax.scatter(X1final, X2final, Yfinal, color="r", label="Global minimum")
+#
+#     ax.set_xlabel("X1")
+#     ax.set_ylabel("X2")
+#     ax.set_zlabel("Z")
+#     ax.set_title("3D Plot of the Six-Hump Camel Function")
+#
+#     plt.show()

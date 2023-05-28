@@ -1,8 +1,10 @@
 import math
-import matplotlib.pyplot as plt
-import numpy as np
 from inspect import signature
 from random import uniform
+
+import numpy as np
+
+from plot import draw_gramacy_lee, draw_six_hump_camel, plot_temperature_iterations
 
 
 # https://www.sfu.ca/~ssurjano/grlee12.html
@@ -18,41 +20,12 @@ def plot_gramacy_lee(FinalX: float, FinalY: float) -> None:
     plt.show()
 
 
-def plot_temperature_iterations(temperature: list = [], iterations: list = []) -> None:
-    plt.plot(iterations, temperature)
-    plt.xlabel("Iterations")
-    plt.ylabel("Temperature")
-    plt.show()
-
-
 # https://www.sfu.ca/~ssurjano/camel6.html
 def six_hump_camel(x1: float, x2: float) -> float:
-    part_one = (4 - 2.1 * x1**2 + (x1**4 / 3)) * x1**2
+    part_one = (4 - 2.1 * x1 ** 2 + (x1 ** 4 / 3)) * x1 ** 2
     part_two = x1 * x2
-    part_three = (-4 + 4 * x2**2) * x2**2
+    part_three = (-4 + 4 * x2 ** 2) * x2 ** 2
     return part_one + part_two + part_three
-
-
-def plot_six_hump_camel(X1final, X2final, Yfinal) -> None:
-    x1 = np.linspace(-2, 2, 100)
-    x2 = np.linspace(-1, 1, 100)
-
-    X1, X2 = np.meshgrid(x1, x2)
-
-    six_hump_camel_vec = np.vectorize(six_hump_camel)
-    Z = six_hump_camel_vec(X1, X2)
-
-    fig = plt.figure(figsize=(8, 6))
-    ax = fig.add_subplot(111, projection="3d")
-    ax.plot_surface(X1, X2, Z, cmap="viridis")
-    ax.scatter(X1final, X2final, Yfinal, color="r", label="Global minimum")
-
-    ax.set_xlabel("X1")
-    ax.set_ylabel("X2")
-    ax.set_zlabel("Z")
-    ax.set_title("3D Plot of the Six-Hump Camel Function")
-
-    plt.show()
 
 
 def acceptance_criterion(cur_fval: float, prev_fval: float, temperature: float) -> bool:
@@ -81,10 +54,10 @@ def generate_new_point(X: list[float], bounds: [list[list]]) -> list[float]:
 
 # The probability of convergence is not 1. Sometimes it won't find the global minimum.
 def simulated_annealing(
-    f, bounds: list[list], temp_max: float, verbose: bool = True
-) -> list[float]:
-    temperatures = []
-    iterations = []
+        f, bounds: list[list[float]], temp_max: float, verbose: bool = True
+) -> dict:
+    data = {"minimum": [], "iterations": 0, "points": [], "temperatures": []}
+
     var_count = len(signature(f).parameters)
     if var_count != len(bounds):
         print("Variable count doesn't match the bound count.")
@@ -93,6 +66,7 @@ def simulated_annealing(
 
     X = [uniform(bounds[i][0], bounds[i][1]) for i in range(0, var_count)]
     E = f(*X)
+    data["points"].append(X)
 
     if verbose:
         print(f"Initial temperature: {temp}")
@@ -106,40 +80,39 @@ def simulated_annealing(
         X_new = generate_new_point(X, bounds)  # TODO: How to choose this?
         E_new = f(*X_new)
 
-        if (
-            np.linalg.norm(np.array(X_new) - np.array(X)) < 0.0001
-        ):  # TODO: do we need that?
+        if (np.linalg.norm(np.array(X_new) - np.array(X)) < 0.0001):  # TODO: do we need that?
             break
 
         if acceptance_criterion(E_new, E, temp):
             X = X_new
             E = E_new
 
-        temperatures.append(temp)
-        iterations.append(i)
+        data["points"].append(X)
+        data["temperatures"].append(temp)
+        data["iterations"] = len(data["points"])
+        data["minimum"] = [X[0], f(*X)]
 
         temp = temp * 0.95  # TODO: How to choose this? I think there is a better way.
 
-    plot_temperature_iterations(temperatures, iterations)
-
     if verbose:
         print(f(*X))
-    return X
+    return data
 
 
 def main():
-    X = simulated_annealing(f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]])
-    print("pirmas")
-    final = gramacy_lee(X[0])
-    plot_gramacy_lee(X, final)
-    print("cia yra final")
-    print(final)
+    gramacy_lee_points = simulated_annealing(
+        f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]]
+    )
 
-    X = simulated_annealing(f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]])
-    final2 = six_hump_camel(X[0], X[1])
-    plot_six_hump_camel(X[0], X[1], final2)
-    print(final2)
-    print(X)
+    six_hump_camel_points = simulated_annealing(
+        f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]]
+    )
+
+    draw_gramacy_lee(gramacy_lee_points["points"])
+    draw_six_hump_camel(six_hump_camel_points["points"])
+
+    plot_temperature_iterations(gramacy_lee_points["temperatures"])
+    plot_temperature_iterations(six_hump_camel_points["temperatures"])
 
 
 if __name__ == "__main__":
