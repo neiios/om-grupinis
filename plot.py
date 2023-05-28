@@ -18,25 +18,18 @@ def draw_gramacy_lee(points):
     points = [point[0] for point in points]
     fig, ax = plt.subplots()
 
-    indices = [0, 9, 19, 49, len(points) - 1]
-    x = np.array([points[i] for i in indices])
+    x = np.array(points)
     y = gramacy_lee(x)
+
     for i, point in enumerate(zip(x, y)):
-        if i == len(indices) - 1:
+        if i == len(points) - 1:
             offset_x, offset_y = 5, 10
             bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
-            ax.scatter(point[0], point[1], color="red", zorder=3)
+            ax.scatter(point[0], point[1], zorder=3, color="red")
         else:
             offset_x, offset_y = 5, 10
             bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
-        ax.annotate(
-            indices[i] + 1,
-            (point[0], point[1]),
-            xytext=(offset_x, offset_y),
-            textcoords="offset points",
-            bbox=bbox_props,
-        )
-        ax.scatter(x[:-1], y[:-1], zorder=2)
+        ax.scatter(x[:-1], y[:-1], zorder=2, facecolors="none", edgecolors="royalblue")
 
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
@@ -55,9 +48,6 @@ def draw_gramacy_lee(points):
 
 def draw_six_hump_camel(points):
     points = np.array(points)
-
-    indices = [0, 49, 199, len(points) - 1]
-    points = np.array([points[i] for i in indices])
 
     x1 = np.linspace(-2, 2, 100)
     x2 = np.linspace(-1, 1, 100)
@@ -85,27 +75,19 @@ def draw_six_hump_camel(points):
         points[:, 0],
         points[:, 1],
         six_hump_camel(points[:, 0], points[:, 1]),
-        color="black",
+        facecolors="none",
+        edgecolors="yellow",
         s=30,
         zorder=2,
     )
 
-    # Add annotations for each point with a background
-    for i, point in enumerate(points):
-        offset_x = 0.09
-        offset_y = 0.09
-        label = str(indices[i] + 1)
-        bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
-        ax.text(
-            point[0] + offset_x,
-            point[1] + offset_y,
-            six_hump_camel(*point),
-            label,
-            color="black",
-            fontsize=8,
-            zorder=2,
-            bbox=bbox_props,
-        )
+    ax.scatter(
+        points[-1][0],
+        points[-1][1],
+        six_hump_camel(points[-1][0], points[-1][1]),
+        zorder=3,
+        color="red",
+    )
 
     ax.set_xlabel("x1")
     ax.set_ylabel("x2")
