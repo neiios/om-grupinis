@@ -69,13 +69,8 @@ def simulated_annealing(
     while temp > 0.0000000001:  # Why this many zeros? Don't ask questions.
         i = i + 1
 
-        X_new = generate_new_point(X, bounds)  # TODO: How to choose this?
+        X_new = generate_new_point(X, bounds)
         E_new = f(*X_new)
-
-        if (
-            np.linalg.norm(np.array(X_new) - np.array(X)) < 0.0001
-        ):  # TODO: do we need that?
-            break
 
         if acceptance_criterion(E_new, E, temp):
             X = X_new
@@ -86,7 +81,7 @@ def simulated_annealing(
         data["iterations"] = len(data["points"])
         data["minimum"] = [X, f(*X)]
 
-        temp = temp * 0.95  # TODO: How to choose this? I think there is a better way.
+        temp = temp * 0.95
 
     if verbose:
         print(f(*X))
