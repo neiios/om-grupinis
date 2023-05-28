@@ -69,7 +69,7 @@ def draw_six_hump_camel(points):
 
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection="3d", computed_zorder=False)
-    ax.plot_surface(X1, X2, Z, cmap="hsv", alpha=0.9, zorder=1)
+    ax.plot_surface(X1, X2, Z, cmap="viridis", alpha=0.9, zorder=1)
 
     ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
     ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))

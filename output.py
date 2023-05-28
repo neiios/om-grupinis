@@ -9,29 +9,29 @@ def output_data(simulated_annealing, gramacy_lee, six_hump_camel):
     )
 
     six_hump_camel_data = simulated_annealing(
-        f=six_hump_camel, temp_max=10000, bounds=[[-3, 3], [-2, 2]]
+        f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]]
     )
 
-    print_points(f=gramacy_lee, data=gramacy_lee_data)
-    print_points(f=six_hump_camel, data=six_hump_camel_data)
+    print_point_table(f=gramacy_lee, data=gramacy_lee_data)
+    print_point_table(f=six_hump_camel, data=six_hump_camel_data)
 
     plot_minimization(gramacy_lee_data, six_hump_camel_data)
 
     experiment(
         simulated_annealing,
         gramacy_lee,
-        [5000, 10000, 15000, 20000],
+        [10, 100, 1000, 2000, 5000, 10000, 1000000],
         bounds=[[0.5, 2.5]],
     )
     experiment(
         simulated_annealing,
         six_hump_camel,
-        [5000, 10000, 15000, 20000],
-        bounds=[[-3, 3], [-2, 2]],
+        [10, 100, 1000, 2000, 5000, 10000, 1000000],
+        bounds=[[-2, 2], [-1, 1]],
     )
 
 
-def print_points(f, data):
+def print_point_table(f, data):
     points = data["points"]
     limited_data = points[:5] + points[-5:]
 
@@ -57,7 +57,7 @@ def print_points(f, data):
             for i, row in enumerate(limited_data)
         ]
 
-    print(tabulate(table_data, headers, tablefmt="grid"))
+    print(tabulate(table_data, headers, tablefmt="rounded_grid"))
 
 
 def plot_minimization(gramacy_lee_data, six_hump_camel_data):
@@ -65,13 +65,13 @@ def plot_minimization(gramacy_lee_data, six_hump_camel_data):
     draw_six_hump_camel(six_hump_camel_data["points"])
 
     plot_temperature_iterations(gramacy_lee_data["temperatures"])
-    plot_temperature_iterations(six_hump_camel_data["temperatures"])
+    # plot_temperature_iterations(six_hump_camel_data["temperatures"])
 
 
 def experiment(simulated_annealing, f, temperatures, bounds):
     data = {"minimums": [], "iterations": []}
 
-    print("Values of ", f.__name__)
+    print(f"Values of {f.__name__}")
 
     for temperature in temperatures:
         tempData = simulated_annealing(f, bounds, temperature)
@@ -100,4 +100,4 @@ def experiment(simulated_annealing, f, temperatures, bounds):
             x2 = minimum[0][1]
             y = minimum[1]
             table_data.append([temperature, x1, x2, y, iterations])
-    print(tabulate(table_data, headers, tablefmt="grid"))
+    print(tabulate(table_data, headers, tablefmt="rounded_grid"))
