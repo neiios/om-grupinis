@@ -54,7 +54,7 @@ def generate_new_point(X: list[float], bounds: [list[list]]) -> list[float]:
 
 # The probability of convergence is not 1. Sometimes it won't find the global minimum.
 def simulated_annealing(
-        f, bounds: list[list[float]], temp_max: float, verbose: bool = True
+        f, bounds: list[list[float]], temp_max: float, verbose: bool = False
 ) -> dict:
     data = {"minimum": [], "iterations": 0, "points": [], "temperatures": []}
 
@@ -90,7 +90,7 @@ def simulated_annealing(
         data["points"].append(X)
         data["temperatures"].append(temp)
         data["iterations"] = len(data["points"])
-        data["minimum"] = [X[0], f(*X)]
+        data["minimum"] = [X, f(*X)]
 
         temp = temp * 0.95  # TODO: How to choose this? I think there is a better way.
 
@@ -107,6 +107,9 @@ def main():
     six_hump_camel_points = simulated_annealing(
         f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]]
     )
+
+    print("Gramacy & Lee (2012): ",gramacy_lee_points)
+    print("Six Hump Camel:", six_hump_camel_points)
 
     draw_gramacy_lee(gramacy_lee_points["points"])
     draw_six_hump_camel(six_hump_camel_points["points"])
