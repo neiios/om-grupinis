@@ -12,19 +12,11 @@ def gramacy_lee(x: float) -> float:
     return (math.sin(10 * math.pi * x) / (2 * x)) + ((x - 1) ** 4)
 
 
-def plot_gramacy_lee(FinalX: float, FinalY: float) -> None:
-    x = np.linspace(0.5, 2.5, 1000)
-    y = np.array([gramacy_lee(val) for val in x])
-    plt.plot(x, y)
-    plt.scatter(FinalX, FinalY, color="r", label="Global Minimum")
-    plt.show()
-
-
 # https://www.sfu.ca/~ssurjano/camel6.html
 def six_hump_camel(x1: float, x2: float) -> float:
-    part_one = (4 - 2.1 * x1 ** 2 + (x1 ** 4 / 3)) * x1 ** 2
+    part_one = (4 - 2.1 * x1**2 + (x1**4 / 3)) * x1**2
     part_two = x1 * x2
-    part_three = (-4 + 4 * x2 ** 2) * x2 ** 2
+    part_three = (-4 + 4 * x2**2) * x2**2
     return part_one + part_two + part_three
 
 
@@ -54,7 +46,7 @@ def generate_new_point(X: list[float], bounds: [list[list]]) -> list[float]:
 
 # The probability of convergence is not 1. Sometimes it won't find the global minimum.
 def simulated_annealing(
-        f, bounds: list[list[float]], temp_max: float, verbose: bool = False
+    f, bounds: list[list[float]], temp_max: float, verbose: bool = False
 ) -> dict:
     data = {"minimum": [], "iterations": 0, "points": [], "temperatures": []}
 
@@ -80,7 +72,9 @@ def simulated_annealing(
         X_new = generate_new_point(X, bounds)  # TODO: How to choose this?
         E_new = f(*X_new)
 
-        if (np.linalg.norm(np.array(X_new) - np.array(X)) < 0.0001):  # TODO: do we need that?
+        if (
+            np.linalg.norm(np.array(X_new) - np.array(X)) < 0.0001
+        ):  # TODO: do we need that?
             break
 
         if acceptance_criterion(E_new, E, temp):
@@ -108,7 +102,7 @@ def main():
         f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]]
     )
 
-    print("Gramacy & Lee (2012): ",gramacy_lee_points)
+    print("Gramacy & Lee (2012): ", gramacy_lee_points)
     print("Six Hump Camel:", six_hump_camel_points)
 
     draw_gramacy_lee(gramacy_lee_points["points"])

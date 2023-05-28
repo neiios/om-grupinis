@@ -1,15 +1,18 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 # Gramacy Lee version with numpy functions
 def gramacy_lee(x: float) -> float:
     return (np.sin(10 * np.pi * x) / (2 * x)) + ((x - 1) ** 4)
 
+
 def six_hump_camel(x1: float, x2: float) -> float:
-    part_one = (4 - 2.1 * x1 ** 2 + (x1 ** 4 / 3)) * x1 ** 2
+    part_one = (4 - 2.1 * x1**2 + (x1**4 / 3)) * x1**2
     part_two = x1 * x2
-    part_three = (-4 + 4 * x2 ** 2) * x2 ** 2
+    part_three = (-4 + 4 * x2**2) * x2**2
     return part_one + part_two + part_three
+
 
 def draw_gramacy_lee(points):
     points = [point[0] for point in points]
@@ -21,15 +24,11 @@ def draw_gramacy_lee(points):
     for i, point in enumerate(zip(x, y)):
         if i == len(indices) - 1:
             offset_x, offset_y = 5, 10
-            bbox_props = dict(
-                boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5
-            )
+            bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
             ax.scatter(point[0], point[1], color="red", zorder=3)
         else:
             offset_x, offset_y = 5, 10
-            bbox_props = dict(
-                boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5
-            )
+            bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
         ax.annotate(
             indices[i] + 1,
             (point[0], point[1]),
@@ -114,12 +113,14 @@ def draw_six_hump_camel(points):
 
     plt.show()
 
+
 def plot_temperature_iterations(temperature: list = []) -> None:
     iterations = list(range(len(temperature)))
     plt.plot(iterations, temperature)
     plt.xlabel("Iterations")
     plt.ylabel("Temperature")
     plt.show()
+
 
 # aint used
 # def plot2d(points, approaching_points=[9, 49, 99]):
