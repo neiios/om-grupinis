@@ -125,3 +125,19 @@ def plot_temperature_iterations(temperature: list = []) -> None:
     plt.ylabel("Temperature")
     plt.savefig("temperature_change.png")
     plt.show()
+
+
+def plot_iteration_functionvalue(f, data) -> None:
+    y_values = []
+
+    for point in data["points"]:
+        y_values.append(f(*point))
+
+    iterations = list(range(len(y_values)))
+
+    plt.figure()
+    plt.title(f.__name__)
+    plt.plot(iterations, y_values)
+    plt.xlabel("Iterations")
+    plt.ylabel("Function value")
+    plt.show()
