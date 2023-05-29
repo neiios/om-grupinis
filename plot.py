@@ -22,12 +22,9 @@ def draw_gramacy_lee(points):
     y = gramacy_lee(x)
 
     for i, point in enumerate(zip(x, y)):
-        bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
-
         if i == len(points) - 1:
             ax.scatter(point[0], point[1], zorder=3, s=60, color="red")
             continue
-
         if i == 0:
             ax.scatter(point[0], point[1], zorder=3, s=60, color="forestgreen")
 
@@ -52,14 +49,15 @@ def draw_gramacy_lee(points):
     plt.plot(x, y, zorder=1)
     plt.xlim((0.5, 2.5))
     plt.ylim((-1, 5))
+    plt.savefig("main_gramacy_lee.png")
     plt.show()
 
 
-def draw_six_hump_camel(points):
+def draw_six_hump_camel(points, bounds=[[-2, 2], [-1, 1]]) -> None:
     points = np.array(points)
 
-    x1 = np.linspace(-2, 2, 100)
-    x2 = np.linspace(-1, 1, 100)
+    x1 = np.linspace(bounds[0][0], bounds[0][1], 100)
+    x2 = np.linspace(bounds[1][0], bounds[1][1], 100)
 
     X1, X2 = np.meshgrid(x1, x2)
 
@@ -70,14 +68,12 @@ def draw_six_hump_camel(points):
     ax = fig.add_subplot(111, projection="3d", computed_zorder=False)
     ax.plot_surface(X1, X2, Z, cmap="viridis", alpha=0.9, zorder=1)
 
+    flat_bounds = np.array(bounds).flatten()
+    plt.savefig(f"surface_[{','.join(str(x) for x in flat_bounds)}]_six_hump_camel.png")
+
     ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
     ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
     ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
-
-    # Plot the function surface
-    X1, X2 = np.meshgrid(np.linspace(0, 1, 50), np.linspace(0, 1, 50))
-    Z = six_hump_camel(X1, X2)
-    ax.plot_surface(X1, X2, Z, cmap="cool", alpha=1, zorder=0)
 
     # Plot the points as a scatter plot
     ax.scatter(
@@ -112,6 +108,7 @@ def draw_six_hump_camel(points):
     ax.set_ylabel("x2")
     ax.set_zlabel("f(x1, x2)")
 
+    plt.savefig("main_six_hump_camel.png")
     plt.show()
 
 
@@ -120,57 +117,5 @@ def plot_temperature_iterations(temperature: list = []) -> None:
     plt.plot(iterations, temperature)
     plt.xlabel("Iterations")
     plt.ylabel("Temperature")
+    plt.savefig("temperature_change.png")
     plt.show()
-
-
-# aint used
-# def plot2d(points, approaching_points=[9, 49, 99]):
-#     points = np.array(points)
-#     fig, ax = plt.subplots()
-#     approaching_points.append(len(points) - 1)
-#     x = np.arange(0, 2, 0.01)
-#     y = np.arange(-1, 2, 0.01)
-#     X, Y = np.meshgrid(x, y)
-#     Z = -0.125 * X * Y * (1 - X - Y)
-#     CS = ax.contour(X, Y, Z, 15, linewidths=0.3)
-#     ax.clabel(CS, inline=True, fontsize=9)
-#
-#     x_points = [points[i][0] for i in approaching_points]
-#     y_points = [points[i][1] for i in approaching_points]
-#     ax.plot(x_points, y_points, "bo")
-#
-#     for i in approaching_points:
-#         ax.annotate(
-#             str(i + 1),
-#             xy=(points[i][0], points[i][1]),
-#             xytext=(7, 0),
-#             textcoords="offset points",
-#         )
-#
-#     ax.spines["right"].set_visible(False)
-#     ax.spines["top"].set_visible(False)
-#     ax.tick_params(axis="both", which="both", length=0)
-#     ax.xaxis.get_major_ticks()[0].label1.set_visible(False)
-#     plt.show()
-
-#
-# def plot_six_hump_camel(X1final, X2final, Yfinal) -> None:
-#     x1 = np.linspace(-2, 2, 100)
-#     x2 = np.linspace(-1, 1, 100)
-#
-#     X1, X2 = np.meshgrid(x1, x2)
-#
-#     six_hump_camel_vec = np.vectorize(six_hump_camel)
-#     Z = six_hump_camel_vec(X1, X2)
-#
-#     fig = plt.figure(figsize=(8, 6))
-#     ax = fig.add_subplot(111, projection="3d")
-#     ax.plot_surface(X1, X2, Z, cmap="viridis")
-#     ax.scatter(X1final, X2final, Yfinal, color="r", label="Global minimum")
-#
-#     ax.set_xlabel("X1")
-#     ax.set_ylabel("X2")
-#     ax.set_zlabel("Z")
-#     ax.set_title("3D Plot of the Six-Hump Camel Function")
-#
-#     plt.show()

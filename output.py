@@ -15,7 +15,9 @@ def output_data(simulated_annealing, gramacy_lee, six_hump_camel):
     print_point_table(f=gramacy_lee, data=gramacy_lee_data)
     print_point_table(f=six_hump_camel, data=six_hump_camel_data)
 
-    plot_minimization(gramacy_lee_data, six_hump_camel_data)
+    draw_gramacy_lee(gramacy_lee_data["points"])
+    draw_six_hump_camel(six_hump_camel_data["points"])
+    plot_temperature_iterations(gramacy_lee_data["temperatures"])
 
     experiment(
         simulated_annealing,
@@ -58,14 +60,6 @@ def print_point_table(f, data):
         ]
 
     print(tabulate(table_data, headers, tablefmt="rounded_grid"))
-
-
-def plot_minimization(gramacy_lee_data, six_hump_camel_data):
-    draw_gramacy_lee(gramacy_lee_data["points"])
-    draw_six_hump_camel(six_hump_camel_data["points"])
-
-    plot_temperature_iterations(gramacy_lee_data["temperatures"])
-    # plot_temperature_iterations(six_hump_camel_data["temperatures"])
 
 
 def experiment(simulated_annealing, f, temperatures, bounds):
