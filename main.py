@@ -92,8 +92,8 @@ def simulated_annealing(
 def main():
     output_data(simulated_annealing, gramacy_lee, six_hump_camel)
 
-    draw_six_hump_camel(only_show_surface=True)
-    draw_six_hump_camel(only_show_surface=True, bounds=[[-3, 3], [-2, 2]])
+    draw_six_hump_camel(only_save_surface=True)
+    draw_six_hump_camel(only_save_surface=True, bounds=[[-3, 3], [-2, 2]])
 
 
 if __name__ == "__main__":

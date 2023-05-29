@@ -3,7 +3,7 @@ import numpy as np
 
 
 # Gramacy Lee version with numpy functions
-def gramacy_lee(x: float) -> float:
+def gramacy_lee(x: float | np.ndarray) -> float | np.ndarray:
     return (np.sin(10 * np.pi * x) / (2 * x)) + ((x - 1) ** 4)
 
 
@@ -14,9 +14,9 @@ def six_hump_camel(x1: float, x2: float) -> float:
     return part_one + part_two + part_three
 
 
-def draw_gramacy_lee(points):
+def draw_gramacy_lee(points, show_plot=False):
     points = [point[0] for point in points]
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
 
     x = np.array(points)
     y = gramacy_lee(x)
@@ -49,12 +49,16 @@ def draw_gramacy_lee(points):
     plt.plot(x, y, zorder=1)
     plt.xlim((0.5, 2.5))
     plt.ylim((-1, 5))
-    plt.savefig("main_gramacy_lee.png")
-    plt.show()
+
+    if show_plot:
+        plt.show()
+    else:
+        plt.savefig("main_gramacy_lee.png")
+        plt.clf()
 
 
 def draw_six_hump_camel(
-    points=[], bounds=[[-2, 2], [-1, 1]], only_show_surface=False
+    points=[], bounds=[[-2, 2], [-1, 1]], only_save_surface=False, show_plot=False
 ) -> None:
     points = np.array(points)
 
@@ -70,7 +74,7 @@ def draw_six_hump_camel(
     ax = fig.add_subplot(111, projection="3d", computed_zorder=False)
     ax.plot_surface(X1, X2, Z, cmap="viridis", alpha=0.9, zorder=1)
 
-    if only_show_surface:
+    if only_save_surface:
         flat_bounds = np.array(bounds).flatten()
         plt.savefig(
             f"surface_[{','.join(str(x) for x in flat_bounds)}]_six_hump_camel.png"
@@ -114,20 +118,29 @@ def draw_six_hump_camel(
     ax.set_ylabel("x2")
     ax.set_zlabel("f(x1, x2)")
 
-    plt.savefig("main_six_hump_camel.png")
-    plt.show()
+    if show_plot:
+        plt.show()
+    else:
+        plt.savefig("main_six_hump_camel.png")
+        plt.clf()
 
 
-def plot_temperature_iterations(temperature: list = []) -> None:
+def plot_temperature_iterations(
+    temperature: list = [], show_plot: bool = False
+) -> None:
     iterations = list(range(len(temperature)))
     plt.plot(iterations, temperature)
     plt.xlabel("Iterations")
     plt.ylabel("Temperature")
-    plt.savefig("temperature_change.png")
-    plt.show()
+
+    if show_plot:
+        plt.show()
+    else:
+        plt.savefig("temperature_change.png")
+        plt.clf()
 
 
-def plot_iteration_functionvalue(f, data) -> None:
+def plot_iteration_functionvalue(f, data, show_plot=False) -> None:
     y_values = []
 
     for point in data["points"]:
@@ -140,4 +153,9 @@ def plot_iteration_functionvalue(f, data) -> None:
     plt.plot(iterations, y_values)
     plt.xlabel("Iterations")
     plt.ylabel("Function value")
-    plt.show()
+
+    if show_plot:
+        plt.show()
+    else:
+        plt.savefig(f"{f.__name__}_iter_fval.png")
+        plt.clf()
