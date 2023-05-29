@@ -22,14 +22,23 @@ def draw_gramacy_lee(points):
     y = gramacy_lee(x)
 
     for i, point in enumerate(zip(x, y)):
+        bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
+
         if i == len(points) - 1:
-            offset_x, offset_y = 5, 10
-            bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
-            ax.scatter(point[0], point[1], zorder=3, color="red")
-        else:
-            offset_x, offset_y = 5, 10
-            bbox_props = dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5)
-        ax.scatter(x[:-1], y[:-1], zorder=2, facecolors="none", edgecolors="royalblue")
+            ax.scatter(point[0], point[1], zorder=3, s=60, color="red")
+            continue
+
+        if i == 0:
+            ax.scatter(point[0], point[1], zorder=3, s=60, color="forestgreen")
+
+        ax.scatter(
+            x[:-1],
+            y[:-1],
+            zorder=2,
+            s=30,
+            facecolors="none",
+            edgecolors="royalblue",
+        )
 
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
@@ -76,15 +85,25 @@ def draw_six_hump_camel(points):
         points[:, 1],
         six_hump_camel(points[:, 0], points[:, 1]),
         facecolors="none",
-        edgecolors="yellow",
-        s=30,
+        edgecolors="black",
+        s=20,
         zorder=2,
+    )
+
+    ax.scatter(
+        points[0][0],
+        points[0][1],
+        six_hump_camel(points[0][0], points[0][1]),
+        s=60,
+        zorder=3,
+        color="forestgreen",
     )
 
     ax.scatter(
         points[-1][0],
         points[-1][1],
         six_hump_camel(points[-1][0], points[-1][1]),
+        s=60,
         zorder=3,
         color="red",
     )
