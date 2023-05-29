@@ -121,7 +121,19 @@ def plot_temperature_iterations(temperature: list = []) -> None:
     plt.ylabel("Temperature")
     plt.show()
 
-
+def plot_iteration_functionvalue(f, data) -> None:
+    y_values = []
+    for point in data["points"]:
+        x_values = point
+        y_values.append(f(*x_values))
+    iterations = list(range(len(y_values)))
+    plt.figure()
+    plt.title(f.__name__)
+    plt.plot(iterations, y_values)
+    plt.xlabel("Iterations")
+    plt.ylabel("Funkction value")
+    plt.show
+    
 # aint used
 # def plot2d(points, approaching_points=[9, 49, 99]):
 #     points = np.array(points)
