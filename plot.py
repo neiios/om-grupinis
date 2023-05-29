@@ -53,7 +53,9 @@ def draw_gramacy_lee(points):
     plt.show()
 
 
-def draw_six_hump_camel(points, bounds=[[-2, 2], [-1, 1]]) -> None:
+def draw_six_hump_camel(
+    points=[], bounds=[[-2, 2], [-1, 1]], only_show_surface=False
+) -> None:
     points = np.array(points)
 
     x1 = np.linspace(bounds[0][0], bounds[0][1], 100)
@@ -68,8 +70,12 @@ def draw_six_hump_camel(points, bounds=[[-2, 2], [-1, 1]]) -> None:
     ax = fig.add_subplot(111, projection="3d", computed_zorder=False)
     ax.plot_surface(X1, X2, Z, cmap="viridis", alpha=0.9, zorder=1)
 
-    flat_bounds = np.array(bounds).flatten()
-    plt.savefig(f"surface_[{','.join(str(x) for x in flat_bounds)}]_six_hump_camel.png")
+    if only_show_surface:
+        flat_bounds = np.array(bounds).flatten()
+        plt.savefig(
+            f"surface_[{','.join(str(x) for x in flat_bounds)}]_six_hump_camel.png"
+        )
+        return
 
     ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
     ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))

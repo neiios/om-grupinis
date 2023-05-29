@@ -5,6 +5,7 @@ from random import uniform
 import numpy as np
 
 from output import output_data
+from plot import draw_six_hump_camel
 
 
 # https://www.sfu.ca/~ssurjano/grlee12.html
@@ -90,6 +91,9 @@ def simulated_annealing(
 
 def main():
     output_data(simulated_annealing, gramacy_lee, six_hump_camel)
+
+    draw_six_hump_camel(only_show_surface=True)
+    draw_six_hump_camel(only_show_surface=True, bounds=[[-3, 3], [-2, 2]])
 
 
 if __name__ == "__main__":
