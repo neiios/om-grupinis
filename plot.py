@@ -14,7 +14,7 @@ def six_hump_camel(x1: float, x2: float) -> float:
     return part_one + part_two + part_three
 
 
-def draw_gramacy_lee(points, show_plot=False):
+def draw_gramacy_lee(points, show_plot=True):
     points = [point[0] for point in points]
     _, ax = plt.subplots()
 
@@ -44,11 +44,15 @@ def draw_gramacy_lee(points, show_plot=False):
     ax.tick_params(axis="both", which="both", length=0)
     ax.xaxis.get_major_ticks()[0].label1.set_visible(False)
 
+    ax.set_xlabel("x")
+    ax.set_ylabel("f(x)")
+
     x = np.linspace(-1, 2.5, 10000)
     y = gramacy_lee(x)
     plt.plot(x, y, zorder=1)
     plt.xlim((0.5, 2.5))
     plt.ylim((-1, 5))
+
 
     if show_plot:
         plt.show()
@@ -73,6 +77,10 @@ def draw_six_hump_camel(
     fig = plt.figure(figsize=(8, 6))
     ax = fig.add_subplot(111, projection="3d", computed_zorder=False)
     ax.plot_surface(X1, X2, Z, cmap="viridis", alpha=0.9, zorder=1)
+
+    ax.set_xlabel("x1")
+    ax.set_ylabel("x2")
+    ax.set_zlabel("f(x1, x2)")
 
     if only_save_surface:
         flat_bounds = np.array(bounds).flatten()
@@ -114,10 +122,6 @@ def draw_six_hump_camel(
         color="red",
     )
 
-    ax.set_xlabel("x1")
-    ax.set_ylabel("x2")
-    ax.set_zlabel("f(x1, x2)")
-
     if show_plot:
         plt.show()
     else:
@@ -132,6 +136,9 @@ def plot_temperature_iterations(
     plt.plot(iterations, temperature)
     plt.xlabel("Iterations")
     plt.ylabel("Temperature")
+
+    plt.xlabel("Iteracijų sk.")
+    plt.ylabel("Temperatūra")
 
     if show_plot:
         plt.show()
@@ -149,10 +156,10 @@ def plot_iteration_functionvalue(f, data, show_plot=False) -> None:
     iterations = list(range(len(y_values)))
 
     plt.figure()
-    plt.title(f.__name__)
+    # plt.title(f.__name__)
     plt.plot(iterations, y_values)
-    plt.xlabel("Iterations")
-    plt.ylabel("Function value")
+    plt.xlabel("Iteracijų sk.")
+    plt.ylabel("Funkcijos įvertis")
 
     if show_plot:
         plt.show()

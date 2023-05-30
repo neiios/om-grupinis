@@ -2,9 +2,6 @@ from tabulate import tabulate
 
 from plot import (
     draw_gramacy_lee,
-    draw_six_hump_camel,
-    plot_temperature_iterations,
-    plot_iteration_functionvalue,
 )
 
 
@@ -17,18 +14,18 @@ def output_data(simulated_annealing, gramacy_lee, six_hump_camel):
         f=six_hump_camel, temp_max=10000, bounds=[[-2, 2], [-1, 1]]
     )
 
-    print_point_table(f=gramacy_lee, data=gramacy_lee_data)
-    print_point_table(f=six_hump_camel, data=six_hump_camel_data)
-    plot_iteration_functionvalue(f=gramacy_lee, data=gramacy_lee_data)
-    plot_iteration_functionvalue(f=six_hump_camel, data=six_hump_camel_data)
+    # print_point_table(f=gramacy_lee, data=gramacy_lee_data)
+    # print_point_table(f=six_hump_camel, data=six_hump_camel_data)
+    # plot_iteration_functionvalue(f=gramacy_lee, data=gramacy_lee_data)
+    # plot_iteration_functionvalue(f=six_hump_camel, data=six_hump_camel_data)
 
     draw_gramacy_lee(gramacy_lee_data["points"])
-    draw_six_hump_camel(six_hump_camel_data["points"])
-    plot_temperature_iterations(gramacy_lee_data["temperatures"])
-    # plot_temperature_iterations(six_hump_camel_data["temperatures"])
-
-    draw_six_hump_camel(only_save_surface=True)
-    draw_six_hump_camel(only_save_surface=True, bounds=[[-3, 3], [-2, 2]])
+    # draw_six_hump_camel(six_hump_camel_data["points"])
+    # plot_temperature_iterations(gramacy_lee_data["temperatures"])
+    # # plot_temperature_iterations(six_hump_camel_data["temperatures"])
+    #
+    # draw_six_hump_camel(only_save_surface=True)
+    # draw_six_hump_camel(only_save_surface=True, bounds=[[-3, 3], [-2, 2]])
 
     experiment(
         simulated_annealing,
