@@ -45,11 +45,11 @@ def print_point_table(f, data):
     points = data["points"]
     limited_data = points[:5] + points[-5:]
 
-    print("Values of ", f.__name__)
+    print(f"Pirmos ir paskutinės penkios iteracijos ({f.__name__})")
 
     # for Gramacy Lee
     if f.__name__ == "gramacy_lee":
-        headers = ["Index", "X", "Y"]
+        headers = ["Iteracija", "X", "Y"]
 
         indexes = list(range(1, 6)) + list(range(len(points) - 4, len(points) + 1))
 
@@ -58,7 +58,7 @@ def print_point_table(f, data):
         ]
     # for Six Hump Camel
     else:
-        headers = ["Index", "X1", "X2", "Y"]
+        headers = ["Iteracija", "X1", "X2", "Y"]
 
         indexes = list(range(1, 6)) + list(range(len(points) - 4, len(points) + 1))
 
@@ -73,7 +73,7 @@ def print_point_table(f, data):
 def experiment(simulated_annealing, f, temperatures, bounds):
     data = {"minimums": [], "iterations": []}
 
-    print(f"Values of {f.__name__}")
+    print(f"Rezultatai pradedant iš skirtingų temperatūros reikšmių ({f.__name__})")
 
     for temperature in temperatures:
         tempData = simulated_annealing(f, bounds, temperature)
@@ -83,7 +83,7 @@ def experiment(simulated_annealing, f, temperatures, bounds):
     table_data = []
     # for Gramacy Lee
     if f.__name__ == "gramacy_lee":
-        headers = ["Temperature", "min X", "min Y", "Iterations"]
+        headers = ["Temperatūra", "min X", "min Y", "Iteracijų sk."]
 
         for temperature, minimum, iterations in zip(
             temperatures, data["minimums"], data["iterations"]
@@ -93,7 +93,7 @@ def experiment(simulated_annealing, f, temperatures, bounds):
             table_data.append([temperature, x, y, iterations])
     # for Six Hump Camel
     else:
-        headers = ["Temperature", "min X1", "min X2", "min Y", "Iterations"]
+        headers = ["Temperatūra", "min X1", "min X2", "min Y", "Iteracijų sk."]
 
         for temperature, minimum, iterations in zip(
             temperatures, data["minimums"], data["iterations"]
@@ -115,5 +115,5 @@ def print_comparison(gramacy_lee_data, six_hump_camel_data):
         ['Six-Hump Camel', formatted_six_hump_camel_min[:-1], formatted_six_hump_camel_min[-1],
          six_hump_camel_data['iterations']]
     ]
-    print("Comparison of the results")
+    print("Rezultatų palyginimai")
     print(tabulate(table_data, headers='firstrow', tablefmt="rounded_grid"))
