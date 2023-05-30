@@ -7,7 +7,6 @@ from plot import (
     plot_iteration_functionvalue,
 )
 
-
 def output_data(simulated_annealing, gramacy_lee, six_hump_camel):
     gramacy_lee_data = simulated_annealing(
         f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]]
@@ -40,6 +39,7 @@ def output_data(simulated_annealing, gramacy_lee, six_hump_camel):
         bounds=[[-2, 2], [-1, 1]],
     )
 
+    print_comparison(gramacy_lee_data, six_hump_camel_data);
 
 def print_point_table(f, data):
     points = data["points"]
@@ -103,3 +103,17 @@ def experiment(simulated_annealing, f, temperatures, bounds):
             y = minimum[1]
             table_data.append([temperature, x1, x2, y, iterations])
     print(tabulate(table_data, headers, tablefmt="rounded_grid"))
+
+def print_comparison(gramacy_lee_data, six_hump_camel_data):
+
+    formatted_gramacy_lee_min = gramacy_lee_data['minimum'][0] + [gramacy_lee_data['minimum'][1]]
+    formatted_six_hump_camel_min = six_hump_camel_data['minimum'][0] + [six_hump_camel_data['minimum'][1]]
+
+    table_data = [
+        ['Algoritmas', ' Minimumo taškas', ' Minimali reikšmė', 'Iteracijų'],
+        ['Gramacy Lee', formatted_gramacy_lee_min[:-1], formatted_gramacy_lee_min[-1], gramacy_lee_data['iterations']],
+        ['Six-Hump Camel', formatted_six_hump_camel_min[:-1], formatted_six_hump_camel_min[-1],
+         six_hump_camel_data['iterations']]
+    ]
+    print("Comparison of the results")
+    print(tabulate(table_data, headers='firstrow', tablefmt="rounded_grid"))
