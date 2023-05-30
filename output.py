@@ -7,6 +7,7 @@ from plot import (
     plot_iteration_functionvalue,
 )
 
+
 def output_data(simulated_annealing, gramacy_lee, six_hump_camel):
     gramacy_lee_data = simulated_annealing(
         f=gramacy_lee, temp_max=10000, bounds=[[0.5, 2.5]]
@@ -26,6 +27,9 @@ def output_data(simulated_annealing, gramacy_lee, six_hump_camel):
     plot_temperature_iterations(gramacy_lee_data["temperatures"])
     # plot_temperature_iterations(six_hump_camel_data["temperatures"])
 
+    draw_six_hump_camel(only_save_surface=True)
+    draw_six_hump_camel(only_save_surface=True, bounds=[[-3, 3], [-2, 2]])
+
     experiment(
         simulated_annealing,
         gramacy_lee,
@@ -40,6 +44,7 @@ def output_data(simulated_annealing, gramacy_lee, six_hump_camel):
     )
 
     print_comparison(gramacy_lee_data, six_hump_camel_data);
+
 
 def print_point_table(f, data):
     points = data["points"]
@@ -86,7 +91,7 @@ def experiment(simulated_annealing, f, temperatures, bounds):
         headers = ["Temperatūra", "min X", "min Y", "Iteracijų sk."]
 
         for temperature, minimum, iterations in zip(
-            temperatures, data["minimums"], data["iterations"]
+                temperatures, data["minimums"], data["iterations"]
         ):
             x = minimum[0][0]
             y = minimum[1]
@@ -96,7 +101,7 @@ def experiment(simulated_annealing, f, temperatures, bounds):
         headers = ["Temperatūra", "min X1", "min X2", "min Y", "Iteracijų sk."]
 
         for temperature, minimum, iterations in zip(
-            temperatures, data["minimums"], data["iterations"]
+                temperatures, data["minimums"], data["iterations"]
         ):
             x1 = minimum[0][0]
             x2 = minimum[0][1]
@@ -104,8 +109,8 @@ def experiment(simulated_annealing, f, temperatures, bounds):
             table_data.append([temperature, x1, x2, y, iterations])
     print(tabulate(table_data, headers, tablefmt="rounded_grid"))
 
-def print_comparison(gramacy_lee_data, six_hump_camel_data):
 
+def print_comparison(gramacy_lee_data, six_hump_camel_data):
     formatted_gramacy_lee_min = gramacy_lee_data['minimum'][0] + [gramacy_lee_data['minimum'][1]]
     formatted_six_hump_camel_min = six_hump_camel_data['minimum'][0] + [six_hump_camel_data['minimum'][1]]
 

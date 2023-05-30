@@ -2,10 +2,7 @@ import math
 from inspect import signature
 from random import uniform
 
-import numpy as np
-
 from output import output_data
-from plot import draw_six_hump_camel
 
 
 # https://www.sfu.ca/~ssurjano/grlee12.html
@@ -15,9 +12,9 @@ def gramacy_lee(x: float) -> float:
 
 # https://www.sfu.ca/~ssurjano/camel6.html
 def six_hump_camel(x1: float, x2: float) -> float:
-    part_one = (4 - 2.1 * x1**2 + (x1**4 / 3)) * x1**2
+    part_one = (4 - 2.1 * x1 ** 2 + (x1 ** 4 / 3)) * x1 ** 2
     part_two = x1 * x2
-    part_three = (-4 + 4 * x2**2) * x2**2
+    part_three = (-4 + 4 * x2 ** 2) * x2 ** 2
     return part_one + part_two + part_three
 
 
@@ -47,7 +44,7 @@ def generate_new_point(X: list[float], bounds: [list[list]]) -> list[float]:
 
 # The probability of convergence is not 1. Sometimes it won't find the global minimum.
 def simulated_annealing(
-    f, bounds: list[list[float]], temp_max: float, verbose: bool = False
+        f, bounds: list[list[float]], temp_max: float, verbose: bool = False
 ) -> dict:
     data = {"minimum": [], "iterations": 0, "points": [], "temperatures": []}
 
@@ -91,9 +88,6 @@ def simulated_annealing(
 
 def main():
     output_data(simulated_annealing, gramacy_lee, six_hump_camel)
-
-    draw_six_hump_camel(only_save_surface=True)
-    draw_six_hump_camel(only_save_surface=True, bounds=[[-3, 3], [-2, 2]])
 
 
 if __name__ == "__main__":
